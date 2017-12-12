@@ -99,8 +99,8 @@ lazy val settings =
   gitSettings ++
   scalafmtSettings ++
   publishSettings ++
-  multiJvmSettings ++
-  bintraySettings
+  multiJvmSettings// ++
+  //bintraySettings
 
 lazy val commonSettings =
   Seq(
@@ -110,6 +110,7 @@ lazy val commonSettings =
     organizationName := "Heiko Seeberger",
     startYear := Some(2015),
     licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0")),
+    scalaVersion := "2.11.8",
     scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
@@ -117,6 +118,7 @@ lazy val commonSettings =
       "-target:jvm-1.8",
       "-encoding", "UTF-8"
     ),
+
     unmanagedSourceDirectories.in(Compile) := Seq(scalaSource.in(Compile).value),
     unmanagedSourceDirectories.in(Test) := Seq(scalaSource.in(Test).value)
 )
@@ -135,6 +137,8 @@ lazy val scalafmtSettings =
 
 lazy val publishSettings =
   Seq(
+    publishTo := Some("Nexus" at "https://repo.knoopje.com/repository/maven-releases/"),
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
     homepage := Some(url("https://github.com/hseeberger/constructr")),
     scmInfo := Some(ScmInfo(url("https://github.com/hseeberger/constructr"),
                             "git@github.com:hseeberger/constructr.git")),
@@ -145,10 +149,10 @@ lazy val publishSettings =
     pomIncludeRepository := (_ => false)
   )
 
-lazy val bintraySettings =
-  Seq(
-    bintrayPackage := "constructr"
-  )
+//lazy val bintraySettings =
+//  Seq(
+//    bintrayPackage := "constructr"
+//  )
 
 lazy val multiJvmSettings =
   com.typesafe.sbt.SbtMultiJvm.multiJvmSettings ++
